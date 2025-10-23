@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://c4hsvcj4cc4cl"]
+
+[ext_resource type="Script" uid="uid://c2pli1d76ueam" path="res://src/scripts/basic_enemy.gd" id="1_ugbwt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_osrmg"]
+albedo_color = Color(1, 0.12156863, 0.078431375, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ugbwt"]
+material = SubResource("StandardMaterial3D_osrmg")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hkwiu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ugbwt"]
+height = 1.5073242
+radius = 0.50341797
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_ugbwt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ugbwt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_hkwiu")
+
+[node name="Area3D" type="Area3D" parent="." groups=["player"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(5, 0, 0, 0, 2, 0, 0, 0, 5, 0, 0.24633789, 0)
+shape = SubResource("CylinderShape3D_ugbwt")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

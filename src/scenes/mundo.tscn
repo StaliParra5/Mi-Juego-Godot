@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://bw0kof7ocrvcs"]
+
+[ext_resource type="PackedScene" uid="uid://bkmyxfpj5nihs" path="res://src/scenes/player.tscn" id="1_tabwl"]
+[ext_resource type="PackedScene" uid="uid://djoppn0tovtlu" path="res://src/scenes/terreno_grass.tscn" id="1_x4uf2"]
+[ext_resource type="PackedScene" uid="uid://c4hsvcj4cc4cl" path="res://src/scenes/basicEnemy.tscn" id="2_r122g"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pesjd"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_tabwl"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tabwl"]
+
+[sub_resource type="Sky" id="Sky_r122g"]
+sky_material = SubResource("ProceduralSkyMaterial_tabwl")
+
+[sub_resource type="Environment" id="Environment_x4uf2"]
+background_mode = 2
+sky = SubResource("Sky_r122g")
+
+[node name="Mundo" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0.14679384, -1.2789102, -0.18631148)
+mesh = SubResource("BoxMesh_pesjd")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_tabwl")
+
+[node name="terreno_grass" parent="MeshInstance3D" instance=ExtResource("1_x4uf2")]
+transform = Transform3D(0.02, 0, 0, 0, 1, 0, 0, 0, 0.02, 0.3170641, 0.27891016, 0.06372623)
+
+[node name="player" parent="." instance=ExtResource("1_tabwl")]
+transform = Transform3D(0.99995965, 0.0016688841, -0.008825792, -0.0018092857, 0.99987155, -0.015925024, 0.008798083, 0.01594035, 0.9998343, -0.18032074, 3.4185839, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x4uf2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.88344455, 0.2695804, 0.38321316, 0.32378948, -0.23989443, 0.91521096, 0.33865362, 0.9326183, 0.12464615, -5.6020384, 12.196582, -2.5432441)
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("2_r122g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9445734, 4.8731165, 6.889308)
+velocidad = 0.5
+
+[node name="CharacterBody3D" parent="CharacterBody3D" instance=ExtResource("2_r122g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9445734, 1.7140114, -3.4482975)
+velocidad = 0.5
+
+[node name="CharacterBody3D2" parent="." instance=ExtResource("2_r122g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.137159, 5.1178427, 11.352093)
+velocidad = 0.5
